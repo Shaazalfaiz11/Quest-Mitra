@@ -34,14 +34,20 @@ app.use('/api/tests', testRoutes);
 app.use('/api/submissions', submissionRoutes);
 
 const path = require('path');
+const fs = require('fs');
 
-// Serve frontend static files
-app.use(express.static(path.join(__dirname, '../frontend/dist')));
-
-// Catch-all route to serve the React frontend for all non-API routes
-app.use((req, res) => {
-  res.sendFile(path.resolve(__dirname, '../frontend/dist/index.html'));
-});
+// Serve frontend static files if they exist
+const distPath = path.join(__dirname, '../frontend/dist');
+if (fs.existsSync(distPath)) {
+  app.use(express.static(distPath));
+  app.use((req, res) => {
+    res.sendFile(path.resolve(distPath, 'index.html'));
+  });
+} else {
+  app.get('/', (req, res) => {
+    res.json({ status: 'Quest Mistra Backend is running' });
+  });
+}
 
 // Socket.io connection and Battle Room logic
 const battleRooms = new Map(); // { roomId: { users: [{ id, name, score }], started: boolean } }
