@@ -65,7 +65,7 @@ const TestCreation = () => {
         },
       };
       
-      const { data } = await axios.post('/api/tests/generate', {
+      const { data } = await axios.post(`${import.meta.env.VITE_API_URL || ''}/api/tests/generate`, {
         topic: aiTopic,
         numQuestions: 3,
         difficulty: 'Medium'
@@ -103,7 +103,7 @@ const TestCreation = () => {
         },
       };
       
-      await axios.post('/api/tests', test, config);
+      await axios.post(`${import.meta.env.VITE_API_URL || ''}/api/tests`, test, config);
       navigate('/dashboard');
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to save test');

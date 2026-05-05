@@ -4,7 +4,7 @@ import { AuthContext } from '../context/AuthContext';
 import { Trophy, Clock, Users, Swords, Zap } from 'lucide-react';
 
 // Connect to the backend socket
-const socket = io();
+const socket = io(import.meta.env.VITE_API_URL || window.location.origin);
 
 // Mock Battle Question
 const mockQuestion = {
