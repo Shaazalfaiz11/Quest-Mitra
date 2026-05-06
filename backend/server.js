@@ -13,8 +13,9 @@ const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
 
 const io = new Server(server, {
   cors: {
-    origin: '*',
+    origin: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
   },
 });
 
@@ -24,7 +25,8 @@ const testRoutes = require('./routes/testRoutes');
 const submissionRoutes = require('./routes/submissionRoutes');
 
 app.use(cors({
-  origin: '*'
+  origin: true,
+  credentials: true
 }));
 app.use(express.json());
 
